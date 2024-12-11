@@ -25,13 +25,13 @@ public class App {
 
     public void addUser(User user){
         users.add(user);
-        System.out.println(users);
+//        System.out.println(users);
     }
 
-    public User findUser(String id){
+    public User findUser(int id){
         User user = null;
 
-        for (int i = 1; i < users.size(); i++){
+        for (int i = 0; i < users.size(); i++){
             if (users.get(i).id == id){
                 user = users.get(i);
                 break;
@@ -40,16 +40,13 @@ public class App {
         return user;
     }
 
-    public void deliverMessage(String fromId, Message message, String toId){
+    public void deliverMessage(int fromId, int toId, Message message){
         User to = app.findUser(toId);
         User from = app.findUser(fromId);
-        System.out.println("Sending from: " + from.username + " to: " + to.username);
+        System.out.println("----\nSending message from " + from.username + " to " + to.username);
         from.sendMessage(message, to);
-
-
     }
 
 
 }
 
-// get instance method

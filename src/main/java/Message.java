@@ -18,39 +18,57 @@
 //
 //markRead() sets read to true DONE *******************************************
 
+import java.util.Date;
+
 public class Message {
 
-    public  String id;
-    public  String datetime;
+    public  static int id = 0;
+    public  Date datetime;
     public  String content;
-    public  String from;
-    public  String to;
+    public  User from;
+    public  User to;
     public  boolean delivered;
     public  boolean read;
 
 
-    public Message(String id, String datetime, String content, String from, String to) {
+    public Message(int id, String content) {
         this.id = id;
-        this.datetime = datetime;
+        this.datetime = new Date();
         this.content = content;
-        this.from = from;
-        this.to = to;
+        this.from = null;
+        this.to = null;
         this.delivered = false;
         this.read = false;
     }
 
-    public void log(){
-        System.out.println(this);
+    public static Message createMessage(String messageContent){
+        id += 1;
+        return new Message(id, messageContent);
+    }
 
+
+    public void log(){
+        String leftAlignFormat = "| %-15s | %-34s |%n";
+        System.out.println("Message Info:");
+        System.out.format("+-----------------+------------------------------------+%n");
+        System.out.format(leftAlignFormat, "ID: " + this.id , "Date: " + this.datetime);
+        System.out.format("+-----------------+------------------------------------+%n");
+        System.out.format(leftAlignFormat, "From: " + this.from.username, "To: " + this.to.username);
+        System.out.format("+-----------------+------------------------------------+%n");
+        System.out.format(leftAlignFormat, "Delivered: " + this.delivered, "Read: " + this.read);
+        System.out.format("+-----------------+------------------------------------+%n");
+        System.out.println("Message content:\n" + this.content);
+        System.out.format("+------------------------------------------------------+%n");
     }
 
     public void markDelivered() {
-        delivered = true;
-
+        this.setDelivered(true);
+        System.out.println("Message has been delivered.");
     }
 
     public void markRead() {
-        read = true;
+        this.setRead(true);
+        System.out.println("Message read.");
     }
 
     public boolean isRead() {
@@ -69,19 +87,19 @@ public class Message {
         this.delivered = delivered;
     }
 
-    public String getTo() {
+    public User getTo() {
         return to;
     }
 
-    public void setTo(String to) {
+    public void setTo(User to) {
         this.to = to;
     }
 
-    public String getFrom() {
+    public User getFrom() {
         return from;
     }
 
-    public void setFrom(String from) {
+    public void setFrom(User from) {
         this.from = from;
     }
 
@@ -93,19 +111,19 @@ public class Message {
         this.content = content;
     }
 
-    public String getDatetime() {
+    public Date getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(String datetime) {
+    public void setDatetime(Date datetime) {
         this.datetime = datetime;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

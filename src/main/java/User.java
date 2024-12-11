@@ -17,7 +17,7 @@
 import java.util.List;
 
 public class User {
-    public String id;
+    public int id;
     public String username;
     public List<Message> inbox;
     public App app;
@@ -26,7 +26,7 @@ public class User {
     public User(){
     }
 
-    public User(String id, String username, List<Message> inbox, App app) {
+    public User(int id, String username, List<Message> inbox, App app) {
         this.id = id;
         this.username = username;
         this.inbox = inbox;
@@ -34,29 +34,36 @@ public class User {
     }
 
     public void login(App app){
-        System.out.println(app);
+        System.out.println("Logging " + this.username + " into app: " + app);
         setApp(app);
         app.addUser(this);
     }
 
     public void sendMessage(Message message, User to){
+        message.setTo(to);
+        message.setFrom(this);
+        System.out.println("Message sent from " + this.username + " to " + to.username);
         to.receiveMessage(message);
-        System.out.println("Message sent");
     }
 
     public void receiveMessage(Message message){
         inbox.add(message);
-        System.out.println(inbox);
-    }
-
-    public void readMessage(){
+        message.markDelivered();
+//        System.out.println(message);
 
     }
-    public String getId() {
+
+    public void readMessage(int messageIndex){
+        Message currentMessage = inbox.get(messageIndex);
+        currentMessage.log();
+        currentMessage.markRead();
+
+    }
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
